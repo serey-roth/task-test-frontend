@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node-terminal",
+            "request": "launch",
+            "name": "Debug Server",
+            "command": "npm run dev",
+            "cwd": "${workspaceFolder}",
+            "sourceMaps": true,
+            "serverReadyAction": {
+                "pattern": "Remix App Server started at http://localhost:([0-9]+)",
+                "uriFormat": "http://localhost:%s/document/new",
+                "webRoot": "${workspaceFolder}"
+            }
+        },
+        {
+            "type": "msedge",
+            "request": "launch",
+            "name": "Debug Client",
+            "sourceMaps": true,
+            "url": "http://localhost:3000/document/new"
+        },
+        {
+            "name": "Attach by Process ID",
+            "processId": "${command:PickProcess}",
+            "request": "attach",
+            "skipFiles": ["<node_internals>/**"],
+            "type": "node"
+        }
+    ]
+}
