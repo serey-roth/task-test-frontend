@@ -17,7 +17,7 @@ Application built using TypeScript, [Remix](https://remix.run/) and [Tailwind](h
 
 -   [/app](./app/) contains the application code;
 -   Each file under [/app/routes](./app/routes/) is a page. Currently, [/app/routes/index.tsx](./app/routes/index.tsx) maps to [http://localhost:3000/](http://localhost:3000/);
--   [/components](./components/) contains individual React components;
+-   [/app/components](./app/components/) contains individual React components;
 -   [/app.css](./app.css) is the base out of which Tailwind generates the CSS for the app. Although it can be used to create css classes for the entire app, Tailwind conventions suggest specifying classes as part of the components JSX.
 
 Side panels are implemented in the app. They are fixed, may be placed on either side of the main content area, and currently only one side panel may exist in either side. Each side panel may have a title, and will render its children.
