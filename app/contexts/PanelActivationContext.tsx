@@ -1,8 +1,6 @@
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 
-export type Side = "left" | "right";
-
 type PanelActivationContextValues = {
     readyToBeActiveIds: string[];
     activatePanel: (id: string) => void;

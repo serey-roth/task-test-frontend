@@ -1,0 +1,1 @@
+export type HorizontalPlacement = "left" | "right";
