@@ -2,8 +2,6 @@ import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { usePanelActivationContext } from './PanelActivationContext';
 
-export type Side = "left" | "right";
-
 type PanelGroupContextValues = {
     panelIdSet: Set<string>;
     activePanelId: string | null;
