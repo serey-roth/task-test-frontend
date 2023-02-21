@@ -8,8 +8,12 @@ function Index() {
         <div className="flex h-full w-full flex-col">
             <div className="h-16 flex-shrink border-b border-b-gray-200"></div>
             <div className="flex-shrink h-8 border-b border-b-gray-200"></div>
-            <div className="flex h-full flex-grow flex-row relative">
-                <PanelGroup side="left" activeId={"Panel 1"}>
+            <div className="flex h-full flex-grow flex-row relative
+            max-h-screen overflow-hidden">
+                <PanelGroup 
+                side="left" 
+                activeId={"Panel 1"} 
+                resizable={true}>
                     <RegisteredPanel id="Panel 1" title="Panel 1">
                         <h2 className="font-bold">Lorem ipsum</h2>
                         <p>Lorem ipsum dolor sit amet...</p>
@@ -119,47 +123,53 @@ function Index() {
                         </table>
                     </RegisteredPanel>
                 </PanelGroup>
-                <div className="max-w-[800px] flex
-                justify-center items-center flex-1 flex-col bg-gray-50">
-                    <ActivatePanel targetPanelId='Panel 1'>
-                        Open panel with Id=1
-                    </ActivatePanel>
-                    <ActivatePanel targetPanelId='Panel 2'>
-                        Open panel with Id=2
-                    </ActivatePanel>
-                    <ActivatePanel targetPanelId='Panel 3'>
-                        Open panel with Id=3
-                    </ActivatePanel>
-                    <ActivatePanel targetPanelId='Panel 4'>
-                        Open panel with Id=4
-                    </ActivatePanel>
-                    <ActivatePanel targetPanelId='Panel 5'>
-                        Open panel with Id=5
-                    </ActivatePanel>
-                    <ActivatePanel targetPanelId='Panel 6'>
-                        Open panel with Id=6
-                    </ActivatePanel>
-                    <ActivatePanel targetPanelId='Panel 7'>
-                        Open panel with Id=7
-                    </ActivatePanel>
-                    <ActivatePanel targetPanelId='Panel 8'>
-                        Open panel with Id=8
-                    </ActivatePanel>
+                <div className="flex flex-grow justify-center bg-gray-500
+                text-white p-4">
+                    <div className='max-w-[800px] flex justify-center items-center 
+                    flex-1 flex-col'>
+                        <ActivatePanel targetPanelId='Panel 1'>
+                            Open panel with Id=1
+                        </ActivatePanel>
+                        <ActivatePanel targetPanelId='Panel 2'>
+                            Open panel with Id=2
+                        </ActivatePanel>
+                        <ActivatePanel targetPanelId='Panel 3'>
+                            Open panel with Id=3
+                        </ActivatePanel>
+                        <ActivatePanel targetPanelId='Panel 4'>
+                            Open panel with Id=4
+                        </ActivatePanel>
+                        <ActivatePanel targetPanelId='Panel 5'>
+                            Open panel with Id=5
+                        </ActivatePanel>
+                        <ActivatePanel targetPanelId='Panel 6'>
+                            Open panel with Id=6
+                        </ActivatePanel>
+                        <ActivatePanel targetPanelId='Panel 7'>
+                            Open panel with Id=7
+                        </ActivatePanel>
+                        <ActivatePanel targetPanelId='Panel 8'>
+                            Open panel with Id=8
+                        </ActivatePanel>
 
-                    <ActivatePanel targetPanelId='Panel 9'>
-                        Open panel with Id=9
-                    </ActivatePanel>
-                    <ActivatePanel targetPanelId='Panel 10'>
-                        Open panel with Id=10
-                    </ActivatePanel>
-                    <ActivatePanel targetPanelId='Panel 11'>
-                        Open panel with Id=11
-                    </ActivatePanel>
-                    <ActivatePanel targetPanelId='Panel 12'>
-                        Open panel with Id=12
-                    </ActivatePanel>
+                        <ActivatePanel targetPanelId='Panel 9'>
+                            Open panel with Id=9
+                        </ActivatePanel>
+                        <ActivatePanel targetPanelId='Panel 10'>
+                            Open panel with Id=10
+                        </ActivatePanel>
+                        <ActivatePanel targetPanelId='Panel 11'>
+                            Open panel with Id=11
+                        </ActivatePanel>
+                        <ActivatePanel targetPanelId='Panel 12'>
+                            Open panel with Id=12
+                        </ActivatePanel>
+                    </div>
                 </div>
-                <PanelGroup side="right" activeId={"Panel 7"}>
+                <PanelGroup 
+                side="right" 
+                activeId={"Panel 7"}
+                resizable={true}>
                     <RegisteredPanel id="Panel 7" title="Panel 7">
                         <h2 className="font-bold">Lorem ipsum</h2>
                         <p>Lorem ipsum dolor sit amet...</p>
