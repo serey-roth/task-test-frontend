@@ -1,14 +1,15 @@
-import Panel from '~/components/shared/panel';
-import { PanelGroup } from '~/components/shared/PanelGroup';
+import PanelGroup from '~/components/shared/PanelGroup';
+import { RegisteredPanel } from '~/components/shared/RegisteredPanel';
+import { withActivePanelsContext } from '~/utils/withActivePanelsContext';
 
-export default function Index() {
+function Index() {
     return (
         <div className="flex h-full w-full flex-col">
             <div className="h-16 flex-shrink border-b border-b-gray-200"></div>
             <div className="flex-shrink h-8 border-b border-b-gray-200"></div>
             <div className="flex h-full flex-grow flex-row relative">
-                <PanelGroup side="left" active={1}>
-                    <Panel title="Panel 1">
+                <PanelGroup side="left" activeId={"Panel 1"}>
+                    <RegisteredPanel id="Panel 1" title="Panel 1">
                         <h2 className="font-bold">Lorem ipsum</h2>
                         <p>Lorem ipsum dolor sit amet...</p>
                         <table>
@@ -25,8 +26,8 @@ export default function Index() {
                                 ))}
                             </tbody>
                         </table>
-                    </Panel>
-                    <Panel title="Panel 2">
+                    </RegisteredPanel>
+                    <RegisteredPanel id="Panel 2" title="Panel 2">
                         <h2 className="font-bold">Lorem ipsum</h2>
                         <p>Lorem ipsum dolor sit amet...</p>
                         <table>
@@ -43,11 +44,11 @@ export default function Index() {
                                 ))}
                             </tbody>
                         </table>
-                    </Panel>
+                    </RegisteredPanel>
                 </PanelGroup>
                 <div className="flex-grow bg-gray-50"></div>
-                <PanelGroup side="right" active={1}>
-                    <Panel title="Panel 3">
+                <PanelGroup side="right" activeId={"Panel 3"}>
+                    <RegisteredPanel id="Panel 3" title="Panel 3">
                         <h2 className="font-bold">Lorem ipsum</h2>
                         <p>Lorem ipsum dolor sit amet...</p>
                         <table>
@@ -64,8 +65,8 @@ export default function Index() {
                                 ))}
                             </tbody>
                         </table>
-                    </Panel>
-                    <Panel title="Panel 4">
+                    </RegisteredPanel>
+                    <RegisteredPanel id="Panel 4" title="Panel 4">
                         <h2 className="font-bold">Lorem ipsum</h2>
                         <p>Lorem ipsum dolor sit amet...</p>
                         <table>
@@ -82,9 +83,11 @@ export default function Index() {
                                 ))}
                             </tbody>
                         </table>
-                    </Panel>
+                    </RegisteredPanel>
                 </PanelGroup>
             </div>
         </div>
     );
 }
+
+export default withActivePanelsContext(Index);
