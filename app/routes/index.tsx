@@ -1,7 +1,8 @@
 import ActivatePanel from '~/components/shared/ActivatePanel';
 import PanelGroup from '~/components/shared/PanelGroup';
 import { RegisteredPanel } from '~/components/shared/RegisteredPanel';
-import { withPanelActivationContext } from '~/utils/withPanelActivationContext';
+import { PanelActivationContextProvider } from '~/contexts/PanelActivationContext';
+import { withContextProvider } from '~/utils/withContextProvider';
 
 function Index() {
     return (
@@ -284,4 +285,4 @@ function Index() {
     );
 }
 
-export default withPanelActivationContext(Index);
+export default withContextProvider(Index, PanelActivationContextProvider);
