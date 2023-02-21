@@ -1,6 +1,7 @@
+import ActivatePanel from '~/components/shared/ActivatePanel';
 import PanelGroup from '~/components/shared/PanelGroup';
 import { RegisteredPanel } from '~/components/shared/RegisteredPanel';
-import { withActivePanelsContext } from '~/utils/withActivePanelsContext';
+import { withPanelActivationContext } from '~/utils/withPanelActivationContext';
 
 function Index() {
     return (
@@ -45,9 +46,6 @@ function Index() {
                             </tbody>
                         </table>
                     </RegisteredPanel>
-                </PanelGroup>
-                <div className="flex-grow bg-gray-50"></div>
-                <PanelGroup side="right" activeId={"Panel 3"}>
                     <RegisteredPanel id="Panel 3" title="Panel 3">
                         <h2 className="font-bold">Lorem ipsum</h2>
                         <p>Lorem ipsum dolor sit amet...</p>
@@ -84,10 +82,196 @@ function Index() {
                             </tbody>
                         </table>
                     </RegisteredPanel>
+                    <RegisteredPanel id="Panel 5" title="Panel 5">
+                        <h2 className="font-bold">Lorem ipsum</h2>
+                        <p>Lorem ipsum dolor sit amet...</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>List</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[1, 2, 3, 4].map((i) => (
+                                    <tr key={i}>
+                                        <td>Item {i}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </RegisteredPanel>
+                    <RegisteredPanel id="Panel 6" title="Panel 6">
+                        <h2 className="font-bold">Lorem ipsum</h2>
+                        <p>Lorem ipsum dolor sit amet...</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>List</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[1, 2, 3, 4].map((i) => (
+                                    <tr key={i}>
+                                        <td>Item {i}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </RegisteredPanel>
+                </PanelGroup>
+                <div className="max-w-[800px] flex
+                justify-center items-center flex-1 flex-col bg-gray-50">
+                    <ActivatePanel targetPanelId='Panel 1'>
+                        Open panel with Id=1
+                    </ActivatePanel>
+                    <ActivatePanel targetPanelId='Panel 2'>
+                        Open panel with Id=2
+                    </ActivatePanel>
+                    <ActivatePanel targetPanelId='Panel 3'>
+                        Open panel with Id=3
+                    </ActivatePanel>
+                    <ActivatePanel targetPanelId='Panel 4'>
+                        Open panel with Id=4
+                    </ActivatePanel>
+                    <ActivatePanel targetPanelId='Panel 5'>
+                        Open panel with Id=5
+                    </ActivatePanel>
+                    <ActivatePanel targetPanelId='Panel 6'>
+                        Open panel with Id=6
+                    </ActivatePanel>
+                    <ActivatePanel targetPanelId='Panel 7'>
+                        Open panel with Id=7
+                    </ActivatePanel>
+                    <ActivatePanel targetPanelId='Panel 8'>
+                        Open panel with Id=8
+                    </ActivatePanel>
+
+                    <ActivatePanel targetPanelId='Panel 9'>
+                        Open panel with Id=9
+                    </ActivatePanel>
+                    <ActivatePanel targetPanelId='Panel 10'>
+                        Open panel with Id=10
+                    </ActivatePanel>
+                    <ActivatePanel targetPanelId='Panel 11'>
+                        Open panel with Id=11
+                    </ActivatePanel>
+                    <ActivatePanel targetPanelId='Panel 12'>
+                        Open panel with Id=12
+                    </ActivatePanel>
+                </div>
+                <PanelGroup side="right" activeId={"Panel 7"}>
+                    <RegisteredPanel id="Panel 7" title="Panel 7">
+                        <h2 className="font-bold">Lorem ipsum</h2>
+                        <p>Lorem ipsum dolor sit amet...</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>List</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[1, 2, 3, 4].map((i) => (
+                                    <tr key={i}>
+                                        <td>Item {i}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </RegisteredPanel>
+                    <RegisteredPanel id="Panel 8" title="Panel 8">
+                        <h2 className="font-bold">Lorem ipsum</h2>
+                        <p>Lorem ipsum dolor sit amet...</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>List</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[1, 2, 3, 4].map((i) => (
+                                    <tr key={i}>
+                                        <td>Item {i}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </RegisteredPanel>
+                    <RegisteredPanel id="Panel 9" title="Panel 9">
+                        <h2 className="font-bold">Lorem ipsum</h2>
+                        <p>Lorem ipsum dolor sit amet...</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>List</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[1, 2, 3, 4].map((i) => (
+                                    <tr key={i}>
+                                        <td>Item {i}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </RegisteredPanel>
+                    <RegisteredPanel id="Panel 10" title="Panel 10">
+                        <h2 className="font-bold">Lorem ipsum</h2>
+                        <p>Lorem ipsum dolor sit amet...</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>List</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[1, 2, 3, 4].map((i) => (
+                                    <tr key={i}>
+                                        <td>Item {i}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </RegisteredPanel>
+                    <RegisteredPanel id="Panel 11" title="Panel 11">
+                        <h2 className="font-bold">Lorem ipsum</h2>
+                        <p>Lorem ipsum dolor sit amet...</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>List</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[1, 2, 3, 4].map((i) => (
+                                    <tr key={i}>
+                                        <td>Item {i}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </RegisteredPanel>
+                    <RegisteredPanel id="Panel 12" title="Panel 12">
+                        <h2 className="font-bold">Lorem ipsum</h2>
+                        <p>Lorem ipsum dolor sit amet...</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>List</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[1, 2, 3, 4].map((i) => (
+                                    <tr key={i}>
+                                        <td>Item {i}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </RegisteredPanel>
                 </PanelGroup>
             </div>
         </div>
     );
 }
 
-export default withActivePanelsContext(Index);
+export default withPanelActivationContext(Index);
