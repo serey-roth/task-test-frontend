@@ -2,13 +2,13 @@ import type { ChangeEvent, ReactNode} from 'react';
 import { useEffect, useState } from 'react';
 import { usePanelActivationContext } from '~/contexts/PanelActivationContext';
 import { usePanelGroupContext } from '~/contexts/PanelGroupContext';
+import type { HorizontalPlacement } from '~/types';
+import useHorizontalResize from '~/utils/useHorizontalResize';
 import { withPanelGroupContext } from '~/utils/withPanelGroupContext';
-
-type Side = "left" | "right";
 
 function getTransitionClasses(
     isOpen: boolean, 
-    side: Side
+    side: HorizontalPlacement
 ) {
     let classes = "";
     if (isOpen) {
@@ -23,15 +23,17 @@ function getTransitionClasses(
 }
 
 interface PanelGroupProps {
-    side: Side;
+    side: HorizontalPlacement;
     activeId: string;
     children: ReactNode;
+    resizable?: boolean;
 }
 
 function PanelGroup({
     side,
     activeId,
-    children
+    children,
+    resizable=false
 }: PanelGroupProps) {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -45,6 +47,11 @@ function PanelGroup({
     const {
         setPanelForActivation,
     } = usePanelActivationContext();
+
+    const {
+        resizableRef,
+        resizerRef,
+    } = useHorizontalResize(side);
 
     const handleSelectPanel = (event: ChangeEvent<HTMLSelectElement>) => {
         setCurrentActiveId(event.target.value);
@@ -68,16 +75,21 @@ function PanelGroup({
 
     return (
         <div
-        className={`absolute top-0 bottom-0 flex
-        h-full flex-row ${side === 'left' ? 
-        'left-0' : 'right-0'}`}
+        ref={resizableRef}
+        className={`absolute top-0 bottom-0 flex w-56
+        h-full flex-shrink flex-row ${side === 'left' ? 
+        'left-0' : 'right-0'} ${resizable ? 'resize-x' : ''}`}
         >
             <div
-            className={`flex w-56 flex-shrink flex-col
+            style={{
+                WebkitOverflowScrolling: 'touch'
+            }}
+            className={`flex w-full flex-col
             gap-2 ${getTransitionClasses(isOpen, side)}
             transition duration-1000 ease-in-out bg-white
             ${side === "left" ? "border-r" : "border-l"}
-            overflow-auto border-r border-r-gray-200 p-2`}
+            border-gray-200 p-2 max-h-full 
+            ${resizable ? 'resize-x overflow-auto' : ''}`}
             >
                 <div className="flex flex-row items-center 
                 justify-between gap-2">
@@ -94,6 +106,14 @@ function PanelGroup({
                     <button onClick={togglePanelGroup}>X</button>
                 </div>
                 <div>{children}</div>
+                <div
+                ref={resizerRef}
+                className={`absolute top-0 bottom-0 h-full
+                    ${side === 'left' ? 'right-0' : 'left-0'} z-10 w-2
+                    ${resizable ? 'cursor-col-resize block opacity-100' : 
+                    'hidden opacity-100'} 
+                    bg-inherit transition duration-1000 ease-in-out`}
+                ></div>
             </div>
             <div className={`absolute top-0 bottom-0 w-12 flex-shrink  
             ${side === "left" ? "left-0 border-r" : 
