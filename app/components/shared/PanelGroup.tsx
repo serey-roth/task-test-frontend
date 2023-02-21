@@ -1,5 +1,8 @@
 import type { ChangeEvent, ReactNode} from 'react';
-import { Children, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useActivePanelsContext } from '~/contexts/ActivePanelsContext';
+import { usePanelGroupContext } from '~/contexts/PanelGroupContext';
+import { withPanelGroupContext } from '~/utils/withPanelGroupContext';
 
 type Side = "left" | "right";
 
@@ -21,25 +24,43 @@ function getTransitionClasses(
 
 interface PanelGroupProps {
     side: Side;
-    active: number;
+    activeId: string;
     children: ReactNode;
 }
 
-export function PanelGroup({
+function PanelGroup({
     side,
-    active,
+    activeId,
     children
 }: PanelGroupProps) {
     const [isOpen, setIsOpen] = useState(false);
-    const [currentActive, setCurrentActive] = useState(active);
+
+    const [currentActiveId, setCurrentActiveId] = useState(activeId);
+    
+    const { 
+        panelIdSet
+    } = usePanelGroupContext();
+
+    const {
+        activatePanel,
+        deactivatePanel,
+    } = useActivePanelsContext();
 
     const handleSelectPanel = (event: ChangeEvent<HTMLSelectElement>) => {
-        setCurrentActive(Number.parseInt(event.target.value));
+        setCurrentActiveId(event.target.value);
+        //fix this
+        deactivatePanel(currentActiveId);
+        activatePanel(event.target.value);
+        //
     }
 
     const togglePanelGroup = () => {
         setIsOpen(prevState => !prevState);
     }
+    
+    useEffect(() => {
+        activatePanel(currentActiveId);
+    }, [activatePanel, currentActiveId]);
 
     return (
         <div
@@ -58,17 +79,17 @@ export function PanelGroup({
                 justify-between gap-2">
                     <select 
                     className='flex-1'
-                    value={currentActive} 
+                    value={currentActiveId} 
                     onChange={handleSelectPanel}>
-                        {Children.map(children, (_, index) => (
-                            <option key={`panel-${index}`} value={index + 1}>
-                                Panel {index + 1}
+                        {Array.from(panelIdSet).map(panelId => (
+                            <option key={panelId} value={panelId}>
+                                {panelId}
                             </option>
                         ))}
                     </select>
                     <button onClick={togglePanelGroup}>X</button>
                 </div>
-                {Children.toArray(children)[currentActive - 1]}
+                <div>{children}</div>
             </div>
             <div className={`absolute top-0 bottom-0 w-12 flex-shrink  
             ${side === "left" ? "left-0 border-r" : 
@@ -87,10 +108,12 @@ export function PanelGroup({
                     className={`${side === 'left' && 'rotate-180'}
                     inline-block whitespace-nowrap py-1`}
                     >
-                        Panel {active}
+                        {currentActiveId}
                     </span>
                 </button>
             </div>
         </div>
     );
 }
+
+export default withPanelGroupContext(PanelGroup);
