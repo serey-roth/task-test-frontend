@@ -1,10 +1,10 @@
-import type { ChangeEvent, ReactNode} from 'react';
+import type { ChangeEvent, ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 import { usePanelActivationContext } from '~/contexts/PanelActivationContext';
-import { usePanelGroupContext } from '~/contexts/PanelGroupContext';
+import { PanelGroupContextProvider, usePanelGroupContext } from '~/contexts/PanelGroupContext';
 import type { HorizontalPlacement } from '~/types';
 import useHorizontalResize from '~/utils/useHorizontalResize';
-import { withPanelGroupContext } from '~/utils/withPanelGroupContext';
+import { withContextProvider } from '~/utils/withContextProvider';
 
 function getTransitionClasses(
     isOpen: boolean, 
@@ -140,4 +140,4 @@ function PanelGroup({
     );
 }
 
-export default withPanelGroupContext(PanelGroup);
+export default withContextProvider(PanelGroup, PanelGroupContextProvider);
