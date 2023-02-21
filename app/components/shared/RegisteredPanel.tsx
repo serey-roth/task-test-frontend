@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
 import React, { useEffect } from 'react';
-import { useActivePanelsContext } from '~/contexts/ActivePanelsContext';
 import { usePanelGroupContext } from '~/contexts/PanelGroupContext';
-import Panel from './Panel';
+import Panel from './panel';
 
 interface RegisteredPanelProps {
     id: string;
@@ -16,11 +15,10 @@ export const RegisteredPanel: React.FC<RegisteredPanelProps> = ({
     children
 }) => {
     const {
+        activePanelId,
         registerNewPanel,
         unregisterPanel,
     } = usePanelGroupContext();
-
-    const { activePanelIds } = useActivePanelsContext();
 
     useEffect(() => {
         registerNewPanel(id);
@@ -33,7 +31,7 @@ export const RegisteredPanel: React.FC<RegisteredPanelProps> = ({
 
     return (
         <>
-            {activePanelIds.includes(id) && (
+            {activePanelId && activePanelId === id && (
                 <Panel title={title}>
                     {children}
                 </Panel>

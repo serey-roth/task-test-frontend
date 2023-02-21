@@ -1,10 +1,12 @@
 import type { ReactNode } from 'react';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { usePanelActivationContext } from './PanelActivationContext';
 
 export type Side = "left" | "right";
 
 type PanelGroupContextValues = {
-    panelIdSet: Set<string>
+    panelIdSet: Set<string>;
+    activePanelId: string | null;
     registerNewPanel: (id: string) => void;
     unregisterPanel: (id: string) => void;
 };
@@ -22,6 +24,12 @@ export function PanelGroupContextProvider({
     children
 }: PanelGroupContextProps) {
     const [panelIdSet, setPanelIdSet] = useState<Set<string>>(new Set<string>());
+    const [activePanelId, setActivePanelId] = useState<string | null>(null);
+
+    const { 
+        readyToBeActiveIds,
+        activatePanel, 
+    } = usePanelActivationContext();
 
     const registerNewPanel = (id: string) => {
         setPanelIdSet(prevSet => prevSet.add(id));
@@ -34,10 +42,21 @@ export function PanelGroupContextProvider({
         });
     }
 
+    useEffect(() => {
+        readyToBeActiveIds.forEach(id => {
+            if (panelIdSet.has(id)) {
+                setActivePanelId(id);
+                activatePanel(id);
+            }
+        });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [readyToBeActiveIds]);
+
     return (
         <PanelGroupContext.Provider
         value={{
             panelIdSet,
+            activePanelId,
             registerNewPanel,
             unregisterPanel,
         }}>

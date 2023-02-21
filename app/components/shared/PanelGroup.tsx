@@ -1,6 +1,6 @@
 import type { ChangeEvent, ReactNode} from 'react';
 import { useEffect, useState } from 'react';
-import { useActivePanelsContext } from '~/contexts/ActivePanelsContext';
+import { usePanelActivationContext } from '~/contexts/PanelActivationContext';
 import { usePanelGroupContext } from '~/contexts/PanelGroupContext';
 import { withPanelGroupContext } from '~/utils/withPanelGroupContext';
 
@@ -35,23 +35,20 @@ function PanelGroup({
 }: PanelGroupProps) {
     const [isOpen, setIsOpen] = useState(false);
 
-    const [currentActiveId, setCurrentActiveId] = useState(activeId);
-    
     const { 
-        panelIdSet
+        panelIdSet,
+        activePanelId
     } = usePanelGroupContext();
 
+    const [currentActiveId, setCurrentActiveId] = useState(activeId);
+
     const {
-        activatePanel,
-        deactivatePanel,
-    } = useActivePanelsContext();
+        setPanelForActivation,
+    } = usePanelActivationContext();
 
     const handleSelectPanel = (event: ChangeEvent<HTMLSelectElement>) => {
         setCurrentActiveId(event.target.value);
-        //fix this
-        deactivatePanel(currentActiveId);
-        activatePanel(event.target.value);
-        //
+        setPanelForActivation(event.target.value);
     }
 
     const togglePanelGroup = () => {
@@ -59,8 +56,15 @@ function PanelGroup({
     }
     
     useEffect(() => {
-        activatePanel(currentActiveId);
-    }, [activatePanel, currentActiveId]);
+        setPanelForActivation(currentActiveId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (activePanelId) {
+            setCurrentActiveId(activePanelId);
+        }
+    }, [activePanelId]);
 
     return (
         <div
