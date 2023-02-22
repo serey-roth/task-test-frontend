@@ -46,7 +46,7 @@ function PanelGroup({
 
     const {
         activatePanel,
-        deactivatePanel
+        switchActivePanels
     } = usePanelActivationContext();
 
     const {
@@ -56,8 +56,7 @@ function PanelGroup({
 
     const handleSelectPanel = (event: ChangeEvent<HTMLSelectElement>) => {
         setCurrentActiveId(event.target.value);
-        activatePanel(event.target.value);
-        deactivatePanel(currentActiveId)
+        switchActivePanels(event.target.value, currentActiveId);
     }
 
     const togglePanelGroup = () => {
