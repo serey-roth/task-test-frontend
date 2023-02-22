@@ -28,7 +28,7 @@ export function PanelGroupContextProvider({
         activeIds,
         targetIdFromMain,
         activatePanel,
-        deactivatePanel,
+        switchActivePanels,
         setMainTargetId,
      } = usePanelActivationContext();
 
@@ -55,9 +55,11 @@ export function PanelGroupContextProvider({
     useEffect(() => {
         if (targetIdFromMain && panelIdSet.has(targetIdFromMain)) {
             setActivePanelId(targetIdFromMain);
-            activatePanel(targetIdFromMain);
             if (activePanelId) {
-                deactivatePanel(activePanelId);
+                switchActivePanels(targetIdFromMain, 
+                    activePanelId);
+            } else {
+                activatePanel(targetIdFromMain);
             }
             setMainTargetId(null);
         }

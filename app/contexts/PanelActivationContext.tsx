@@ -7,6 +7,7 @@ type PanelActivationContextValues = {
     targetIdFromMain: string | null;
     activatePanel: (id: string) => void;
     deactivatePanel: (id: string) => void;
+    switchActivePanels: (newActiveId: string, oldActiveId: string) => void;
     setMainTargetId: (id: string | null) => void;
 };
 
@@ -25,7 +26,11 @@ export function PanelActivationContextProvider({
     const [activeIds, setActiveIds] = useState<string[]>([]);
     const [targetIdFromMain, setTargetIdFromMain] = useState<string | null>(null);
 
-    const { persistedValues, persistValues } = usePersist();
+    const { 
+        persistedEntries, 
+        persistValues,
+        getPersistedValuesByIdentifier
+    } = usePersist();
     
     const activatePanel = (id: string) => {
         setActiveIds(prevIds => {
@@ -43,20 +48,32 @@ export function PanelActivationContextProvider({
         });
     }
 
+    const switchActivePanels = (newActiveId: string, oldActiveId?: string) => {
+        let currentActiveIds = activeIds.slice();
+        if (oldActiveId) {
+            currentActiveIds = currentActiveIds.filter(id => id !== oldActiveId);
+        } 
+        if (!currentActiveIds.includes(newActiveId)) {
+            currentActiveIds.push(newActiveId);
+        }
+        setActiveIds(currentActiveIds);
+    }
+
     const setMainTargetId = (value: string | null) => {
         setTargetIdFromMain(value);
     }
 
     useEffect(() => {
-        if (persistedValues.length > 0) {
-            setActiveIds(persistedValues);
+        if (persistedEntries.length > 0) {
+            setActiveIds(getPersistedValuesByIdentifier('active'));
         }
-    }, [persistedValues])
+    }, [getPersistedValuesByIdentifier, persistedEntries])
 
     useEffect(() => {
-        persistValues(activeIds);
+        persistValues(activeIds, 'active');
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeIds]);
+
 
     return (
         <PanelActivationContext.Provider
@@ -65,6 +82,7 @@ export function PanelActivationContextProvider({
             targetIdFromMain,
             activatePanel,
             deactivatePanel,
+            switchActivePanels,
             setMainTargetId
         }}>
             {children}
