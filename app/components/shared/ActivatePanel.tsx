@@ -13,10 +13,10 @@ type ActivatePanelProps = {
 export default function ActivatePanel({ 
     targetPanelId, children 
 }: ActivatePanelProps) {
-    const { setPanelForActivation } = usePanelActivationContext();
+    const { setMainTargetId } = usePanelActivationContext();
 
     const handleClick = () => {
-        setPanelForActivation(targetPanelId);
+        setMainTargetId(targetPanelId);
     };
 
     return (

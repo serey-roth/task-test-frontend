@@ -1,10 +1,13 @@
 import type { ReactNode } from 'react';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { usePersist } from '~/utils/usePersist';
 
 type PanelActivationContextValues = {
-    readyToBeActiveIds: string[];
+    activeIds: string[];
+    targetIdFromMain: string | null;
     activatePanel: (id: string) => void;
-    setPanelForActivation: (id: string) => void;
+    deactivatePanel: (id: string) => void;
+    setMainTargetId: (id: string | null) => void;
 };
 
 const PanelActivationContext = createContext<PanelActivationContextValues>(
@@ -19,29 +22,50 @@ interface PanelActivationContextProps {
 export function PanelActivationContextProvider({
     children
 }: PanelActivationContextProps) {
-    const [readyToBeActiveIds, setReadyToBeActiveIds] = useState<string[]>([]);
+    const [activeIds, setActiveIds] = useState<string[]>([]);
+    const [targetIdFromMain, setTargetIdFromMain] = useState<string | null>(null);
 
+    const { persistedValues, persistValues } = usePersist();
+    
     const activatePanel = (id: string) => {
-        setReadyToBeActiveIds(prevIds => 
-            prevIds.filter(i => i !== id));
-    }   
-
-    const setPanelForActivation = (id: string) => {
-        setReadyToBeActiveIds(prevIds => {
+        setActiveIds(prevIds => {
             if (prevIds.includes(id)) {
                 return prevIds;
             } else {
-                return [...prevIds, id]
+                return [...prevIds, id];
             }
         });
+    };
+
+    const deactivatePanel = (id: string) => {
+        setActiveIds(prevIds => {
+            return prevIds.filter(val => val !== id);
+        });
     }
+
+    const setMainTargetId = (value: string | null) => {
+        setTargetIdFromMain(value);
+    }
+
+    useEffect(() => {
+        if (persistedValues.length > 0) {
+            setActiveIds(persistedValues);
+        }
+    }, [persistedValues])
+
+    useEffect(() => {
+        persistValues(activeIds);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [activeIds]);
 
     return (
         <PanelActivationContext.Provider
         value={{
-            readyToBeActiveIds,
+            activeIds,
+            targetIdFromMain,
             activatePanel,
-            setPanelForActivation,
+            deactivatePanel,
+            setMainTargetId
         }}>
             {children}
         </PanelActivationContext.Provider>
