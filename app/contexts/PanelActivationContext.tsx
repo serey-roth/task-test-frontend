@@ -7,6 +7,7 @@ type PanelActivationContextValues = {
     targetIdFromMain: string | null;
     activatePanel: (id: string) => void;
     deactivatePanel: (id: string) => void;
+    switchActivePanels: (newActiveId: string, oldActiveId: string) => void;
     setMainTargetId: (id: string | null) => void;
 };
 
@@ -43,6 +44,17 @@ export function PanelActivationContextProvider({
         });
     }
 
+    const switchActivePanels = (newActiveId: string, oldActiveId?: string) => {
+        let currentActiveIds = activeIds.slice();
+        if (oldActiveId) {
+            currentActiveIds = currentActiveIds.filter(id => id !== oldActiveId);
+        } 
+        if (!currentActiveIds.includes(newActiveId)) {
+            currentActiveIds.push(newActiveId);
+        }
+        setActiveIds(currentActiveIds);
+    }
+
     const setMainTargetId = (value: string | null) => {
         setTargetIdFromMain(value);
     }
@@ -65,6 +77,7 @@ export function PanelActivationContextProvider({
             targetIdFromMain,
             activatePanel,
             deactivatePanel,
+            switchActivePanels,
             setMainTargetId
         }}>
             {children}
