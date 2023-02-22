@@ -88,11 +88,13 @@ function PanelGroup({
             gap-2 ${getTransitionClasses(isOpen, side)}
             transition duration-1000 ease-in-out bg-white
             ${side === "left" ? "border-r" : "border-l"}
-            border-gray-200 p-2 max-h-full 
+            border-gray-200 p-3 max-h-full 
             ${resizable ? 'resize-x overflow-auto' : ''}`}
             >
-                <div className="flex flex-row items-center 
-                justify-between gap-2">
+                <div className={`flex items-center 
+                justify-between gap-2 ${side === "left" ? "flex-row" 
+                : "flex-row-reverse"}
+                `}>
                     <select 
                     className='flex-1'
                     value={currentActiveId} 
