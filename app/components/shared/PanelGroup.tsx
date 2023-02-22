@@ -45,7 +45,8 @@ function PanelGroup({
     const [currentActiveId, setCurrentActiveId] = useState(activeId);
 
     const {
-        setPanelForActivation,
+        activatePanel,
+        deactivatePanel
     } = usePanelActivationContext();
 
     const {
@@ -55,22 +56,21 @@ function PanelGroup({
 
     const handleSelectPanel = (event: ChangeEvent<HTMLSelectElement>) => {
         setCurrentActiveId(event.target.value);
-        setPanelForActivation(event.target.value);
+        activatePanel(event.target.value);
+        deactivatePanel(currentActiveId)
     }
 
     const togglePanelGroup = () => {
         setIsOpen(prevState => !prevState);
     }
-    
-    useEffect(() => {
-        setPanelForActivation(currentActiveId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     useEffect(() => {
         if (activePanelId) {
             setCurrentActiveId(activePanelId);
+        } else {
+            activatePanel(activeId);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activePanelId]);
 
     return (
