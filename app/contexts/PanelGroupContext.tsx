@@ -25,9 +25,12 @@ export function PanelGroupContextProvider({
     const [activePanelId, setActivePanelId] = useState<string | null>(null);
 
     const { 
-        readyToBeActiveIds,
-        activatePanel, 
-    } = usePanelActivationContext();
+        activeIds,
+        targetIdFromMain,
+        activatePanel,
+        deactivatePanel,
+        setMainTargetId,
+     } = usePanelActivationContext();
 
     const registerNewPanel = (id: string) => {
         setPanelIdSet(prevSet => prevSet.add(id));
@@ -41,14 +44,25 @@ export function PanelGroupContextProvider({
     }
 
     useEffect(() => {
-        readyToBeActiveIds.forEach(id => {
+        activeIds.forEach(id => {
             if (panelIdSet.has(id)) {
                 setActivePanelId(id);
-                activatePanel(id);
             }
         });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [readyToBeActiveIds]);
+    }, [activeIds]);
+
+    useEffect(() => {
+        if (targetIdFromMain && panelIdSet.has(targetIdFromMain)) {
+            setActivePanelId(targetIdFromMain);
+            activatePanel(targetIdFromMain);
+            if (activePanelId) {
+                deactivatePanel(activePanelId);
+            }
+            setMainTargetId(null);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [targetIdFromMain, activePanelId])
 
     return (
         <PanelGroupContext.Provider
