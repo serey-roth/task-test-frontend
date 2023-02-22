@@ -26,7 +26,11 @@ export function PanelActivationContextProvider({
     const [activeIds, setActiveIds] = useState<string[]>([]);
     const [targetIdFromMain, setTargetIdFromMain] = useState<string | null>(null);
 
-    const { persistedValues, persistValues } = usePersist();
+    const { 
+        persistedEntries, 
+        persistValues,
+        getPersistedValuesByIdentifier
+    } = usePersist();
     
     const activatePanel = (id: string) => {
         setActiveIds(prevIds => {
@@ -60,15 +64,16 @@ export function PanelActivationContextProvider({
     }
 
     useEffect(() => {
-        if (persistedValues.length > 0) {
-            setActiveIds(persistedValues);
+        if (persistedEntries.length > 0) {
+            setActiveIds(getPersistedValuesByIdentifier('active'));
         }
-    }, [persistedValues])
+    }, [getPersistedValuesByIdentifier, persistedEntries])
 
     useEffect(() => {
-        persistValues(activeIds);
+        persistValues(activeIds, 'active');
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeIds]);
+
 
     return (
         <PanelActivationContext.Provider
