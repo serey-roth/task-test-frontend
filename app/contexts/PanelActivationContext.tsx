@@ -67,7 +67,8 @@ export function PanelActivationContextProvider({
         if (persistedEntries.length > 0) {
             setActiveIds(getPersistedValuesByIdentifier('active'));
         }
-    }, [getPersistedValuesByIdentifier, persistedEntries])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [persistedEntries])
 
     useEffect(() => {
         persistValues(activeIds, 'active');
